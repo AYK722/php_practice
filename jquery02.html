@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>jQueryの練習</title>
+    </head>
+    <body>
+        <p>jQueryの練習</p>
+        <p><a href="http://google.com" data-sitename="google">Google</a></p>
+        
+        <ul id="main">
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+            <li id="clone">3</li>
+        </ul>
+
+        <input id="button1" type="button" value="button1">
+        <input id="button2" type="button" value="button2">
+        <input id="button3" type="button" value="button3">
+        <input id="button4" type="button" value="button4">
+        <input id="button5" type="button" value="button5">
+        <input id="button6" type="button" value="button6">
+
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            
+            // 1.ボタンをクリックしたら、「Google」のタグの「data-sitename」を取得してアラートとして表示
+            $("#button1").on('click', function () {
+                alert($('a').data('sitename'));
+            });
+
+            // 2.ボタンをクリックしたら、「Google」のaタグのリンク先に遷移
+            $("#button2").on('click', function () {
+                location.href = $('a').attr('href');
+            });
+            
+            // 3.ボタンをクリックしたら、「Google」のaタグのリンク先に別タブで遷移
+            $("#button3").on('click', function () {
+                window.open().location.href = $('a').attr('href');
+            });
+            
+            // 4.ボタンをクリックしたら、遷移しますか？（選択肢「する」「しない」)というアラートを出して「する」を押したらaタグのリンク先に遷移
+            $("#button4").on('click', function () {
+                if (confirm('ページ遷移しますか？')) {
+                    location.href = $('a').attr('href');
+                } else {
+                    return false;
+                }
+            });
+            
+            // 5.ボタンをクリックしたら、ulの中のliを複製して1個増やす
+            $("#button5").on('click', function () {
+                $("#clone").clone(false).appendTo("ul");
+            });
+            
+            // 6.ボタンをクリックしたら、画面を更新
+            $("#button6").on('click', function () {
+                location.reload();
+            });
+        })
+    </script>
+    </body>
+</html>
