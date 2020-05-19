@@ -9,25 +9,26 @@
 
         # 1.配列をオブジェクト型に変換してください。
         # 2.オブジェクト型の値を表示してください。
-        $array = ['パンダ', 'うさぎ', 'コアラ'];
-        var_dump((object)$array);
+        $array1 = ['パンダ', 'うさぎ', 'コアラ'];
+        var_dump((object)$array1);
+        
         print "<br />";
 
         # 3.1次元配列は配列で2次元配列がオブジェクト型の配列を作成してください。
-        $ary = ['a', 'b', 'c', 'd'];
+        $object[] = (object)['name' => 'りんご'];
+        $object[] = (object)['name' => 'オレンジ'];
+        $object[] = (object)['name' => 'ぶどう'];
 
-        $obj = (object)[
-            ['a', 'b', 'c'],
-            ['d', 'e', 'f'],
-            ['g', 'h', 'i'],
-        ];
+        var_dump($object);
 
-        var_dump($obj);
         print "<br />";
 
         # 4.3で作成したものをループで値を表示してください。
-        # わからず…
+        foreach ($object as $obj) {
+            print $obj->name;
+        }
 
+        print "<br />";
 
         # ループ処理
         # 1.forのループを使って1から50までの数字を表示してください。
