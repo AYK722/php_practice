@@ -3,16 +3,43 @@
     <head>
         <meta charset="utf-8">
         <title>jQueryの練習</title>
+        <style>
+            .active {
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <p>jQueryの練習</p>
         <p><a href="http://google.com" data-sitename="google">Google</a></p>
+        <p><a href="http://yahoo.co.jp">Yahoo!</a></p>
+        <p><a href="http://dotinstall.com">dotinstall</a></p>        
         
+        
+        <!- ボタンがクリックされたら増えるリスト ->
         <ul id="main">
             <li>0</li>
-            <li>1</li>
-            <li>2</li>
-            <li id="clone">3</li>
+            <li class="item">1</li>
+            <li class="item">2</li>
+            <li>
+                3
+                <ul id="sub">
+                    <li>3-0</li>
+                    <li>3-1</li>
+                    <li class="item">3-2</li>
+                    <li class="item">3-3</li>
+                    <li>3-4</li>
+                </ul>
+            </li>
+        </ul>
+
+        <!- 押したらクラスが付与されるリスト ->
+        <ul id="second">
+            <li class="active"><a href="#">1-1</a></li>
+            <li><a href="#">1-2</a></li>
+            <li><a href="#">1-3</a></li>
+            <li><a href="#">1-4</a></li>
+            <li><a href="#">1-5</a></li>
         </ul>
 
         <input id="button1" type="button" value="button1">
@@ -28,23 +55,23 @@
             
             // 1.ボタンをクリックしたら、「Google」のタグの「data-sitename」を取得してアラートとして表示
             $("#button1").on('click', function () {
-                alert($('a').data('sitename'));
+                alert($("a:contains('Google')").data('sitename'));
             });
 
             // 2.ボタンをクリックしたら、「Google」のaタグのリンク先に遷移
             $("#button2").on('click', function () {
-                location.href = $('a').attr('href');
+                location.href = $("a:contains('Google')").attr('href');
             });
             
             // 3.ボタンをクリックしたら、「Google」のaタグのリンク先に別タブで遷移
             $("#button3").on('click', function () {
-                window.open().location.href = $('a').attr('href');
+                window.open().location.href = $("a:contains('Google')").attr('href');
             });
             
             // 4.ボタンをクリックしたら、遷移しますか？（選択肢「する」「しない」)というアラートを出して「する」を押したらaタグのリンク先に遷移
             $("#button4").on('click', function () {
                 if (confirm('ページ遷移しますか？')) {
-                    location.href = $('a').attr('href');
+                    location.href = $("a:contains('Google')").attr('href');
                 } else {
                     return false;
                 }
@@ -52,13 +79,27 @@
             
             // 5.ボタンをクリックしたら、ulの中のliを複製して1個増やす
             $("#button5").on('click', function () {
-                $("#clone").clone(false).appendTo("ul");
+                $("#sub li:last").clone(false).appendTo("#sub");
             });
             
             // 6.ボタンをクリックしたら、画面を更新
             $("#button6").on('click', function () {
                 location.reload();
             });
+
+            // クラス付け替え
+            // 1.class=activeがついていないliを押したら、押したliにactiveを付与
+            // 2.1の時に、押したli以外のliのclass=activeは削除
+            // 3.class=activeがついているliを押したら、押したliのactiveを削除
+            $("#second > li").on('click', function () {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                } else {
+                    $('li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            
         })
     </script>
     </body>
