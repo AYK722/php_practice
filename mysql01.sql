@@ -4,43 +4,53 @@
  * 1.usersの一覧を表示してください。
  */
 
-select * from users;
+SELECT * FROM users;
 
 /*
  * 2.usersで年齢が20以上の人を表示してください。
- */
+*/
 
-select * from users where age >= 20;
+SELECT * FROM users WHERE age >= 20;
 
 /*
  * 3.usersの平均年齢を表示してください。
  */
 
-select AVG(age) from users;
+SELECT AVG(age) FROM users;
 
 /*
  * 4.usersでidが1,3,6の人を表示してください。
  */
 
-select * from users where id in (1, 3, 5);
+SELECT *
+  FROM users
+ WHERE id IN (1, 3, 5);
 
 /*
  * 5.usersで名前に「田」が入っている人を表示してください。
  */
 
-select * from users where name like '%田%';
+SELECT * 
+  FROM users
+ WHERE users.name
+  LIKE '%田%';
 
 /*
  * 6.usersで年齢が最も高い人を1人表示してください。
  */
 
-select * from users order by age desc limit 1;
+SELECT *
+  FROM users
+ ORDER BY age
+  DESC LIMIT 1;
 
 /*
  * 7.usersで年齢が低い順に並べ替えて表示してください。
  */
  
-select * from users order by age;
+SELECT *
+  FROM users
+ ORDER BY age;
 
 /*
  * 内部結合(inner join)
@@ -48,25 +58,37 @@ select * from users order by age;
  * 1.postsとcategoriesの内容を全て表示してください。
  */
 
-select * from posts join categories on posts.category_id = categories.id;
+SELECT * 
+ FROM posts p
+ JOIN categories c
+   ON p.category_id = c.id;
 
 /*
  * 2.postsの内容のみ表示してください。
  */
 
-select posts.id, user_id, title, content from posts join categories on posts.category_id = categories.id;
+SELECT p.id, user_id, title, content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 3.postsの内容のみ表示し、category_idの部分だけcategoriesのnameを表示してください。
  */
 
-select posts.id, user_id, categories.name, title, content from posts join categories on posts.category_id = categories.id;
+SELECT p.id, user_id, c.name, title, content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 4.postsの件数を表示してください。
  */
 
-select count(*) from posts join categories on posts.category_id = categories.id;
+SELECT count(*) 
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 外部結合(outer join)
@@ -74,25 +96,37 @@ select count(*) from posts join categories on posts.category_id = categories.id;
  * 1.postsとcategoriesの内容を全て表示してください。
  */
 
-select * from posts left join categories on posts.category_id = categories.id;
+SELECT *
+  FROM posts p
+  LEFT JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 2.postsの内容のみ表示してください。
  */
 
-select posts.id, user_id, title, content from posts left join categories on posts.category_id = categories.id;
+SELECT p.id, user_id, title, content
+  FROM posts p
+  LEFT JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 3.postsの内容のみ表示し、category_idの部分だけcategoriesのnameを表示してください。
  */
 
-select posts.id, user_id, categories.name, title, content from posts left join categories on posts.category_id = categories.id;
+SELECT p.id, user_id, c.name, title, content
+  FROM posts p
+  LEFT JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 4.postsの件数を表示してください。
  */
 
-select count(*) from posts left join categories on posts.category_id = categories.id;
+SELECT count(*)
+  FROM posts p 
+  LEFT JOIN categories c
+    ON p.category_id = c.id;
 
 /*
  * 複数テーブルの結合(inner join)
@@ -100,13 +134,27 @@ select count(*) from posts left join categories on posts.category_id = categorie
  * 1.postsとcategoriesとusersの内容を全て表示してください。
  */
 
-select * from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id;
+SELECT * 
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id;
 
 /*
  * 2.postsの内容のみ表示し、category_idの部分をcategoriesのnameを、user_idの部分をusersのnameを表示してください。
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id;
+SELECT p.id,
+       u.name,
+       c.name,
+       title,
+       content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id;
 
 /*
  * 3.2のsqlに下記の条件を追加してください。
@@ -114,43 +162,116 @@ select posts.id, users.name, categories.name, title, content from posts join cat
  * 1.categoriesが「政治」の記事のみ表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id where categories.name = "政治";
+SELECT p.id,
+       u.name,
+       c.name,
+       title,
+       content
+  FROM posts p
+INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u 
+    ON p.user_id = u.id
+ WHERE c.name = "政治";
 
 /*
  * 2.categoriesが  「スポーツ」「芸能」の記事のみ表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id where categories.name in ("スポーツ", "芸能");
+SELECT p.id,
+       u.name,
+       c.name,
+       title,
+       content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id
+ WHERE c.name IN ("スポーツ", "芸能");
 
 /*
  * 3.usersの名前が「高木」の記事のみ表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id where users.name = "高木";
+SELECT p.id,
+       u.name,
+       c.name,
+       title,
+       content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id
+ WHERE u.name = "高木";
 
 /*
  * 4.usersの年齢が25以上の記事のみ表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id where users.age >= 25;
+SELECT p.id,
+       u.name,
+       u.age,
+       c.name,
+       title,
+       content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id
+ WHERE u.age >= 25;
 
 /*
  * 5.存在しないcategoriesのデータが指定されている記事のみ表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts left join categories on posts.category_id = categories.id join users on posts.user_id = users.id where categories.name is null;
+SELECT p.id,
+       u.name,
+       c.name,
+       title,
+       content
+  FROM posts p
+  LEFT JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id
+ WHERE c.name IS NULL;
 
 /*
  * 6.usersのid順に記事を並べ替えて表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id order by users.id;
+SELECT p.id,
+       u.id,
+       u.name,
+       c.name,
+       title,
+       content
+  FROM posts p
+ INNER JOIN categories c 
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id
+ ORDER BY u.id;
 
 /*
  * 7.usersの年齢が高い順に記事を並べ替えて表示
  */
 
-select posts.id, users.name, categories.name, title, content from posts join categories on posts.category_id = categories.id join users on posts.user_id = users.id order by users.age desc;
+SELECT p.id,
+       u.name,
+       u.age,
+       c.name,
+       title,
+       content
+  FROM posts p
+ INNER JOIN categories c
+    ON p.category_id = c.id
+ INNER JOIN users u
+    ON p.user_id = u.id
+ ORDER BY u.age DESC;
 
 /*
  * 集計
@@ -158,22 +279,47 @@ select posts.id, users.name, categories.name, title, content from posts join cat
  * 1.userごとの記事の投稿数を表示してください。(userの名前と件数)
  */
 
-select users.name, count(*) from posts left join users on posts.user_id = users.id group by users.id;
+SELECT u.name, count(*)
+  FROM posts p
+  LEFT JOIN users u
+    ON p.user_id = u.id
+ GROUP BY u.id;
 
 /*
  * 2.記事の投稿数が最も多いuserの名前と件数を表示してください。
  */
 
-select users.name, count(*) as count from posts left join users on posts.user_id = users.id group by users.id order by count desc limit 1;
+SELECT u.name, count(*)
+    AS count
+  FROM posts p 
+  LEFT JOIN users u
+    ON p.user_id = u.id
+ GROUP BY u.id
+ ORDER BY count
+  DESC LIMIT 1;
 
 /*
  * 3.記事の投稿数が6回以上のuserの名前と件数を表示してください。
  */
 
-select users.name, count(*) as count from posts left join users on posts.user_id = users.id group by users.id having count >= 6;
+SELECT u.name, count(*)
+    AS count
+  FROM posts p
+  LEFT JOIN users u
+    ON p.user_id = u.id
+ GROUP BY u.id
+HAVING count >= 6;
 
 /*
  * 4.記事の投稿数が多い順に並べ替えて表示してください。
  */
 
-select users.name, count(*) as count from posts left join users on posts.user_id = users.id group by users.id order by count desc;
+SELECT u.name, count(*)
+    AS count
+  FROM posts p
+  LEFT JOIN users u
+    ON p.user_id = u.id
+ GROUP BY u.id
+ ORDER BY count DESC;
+ 
+
