@@ -14,7 +14,11 @@
     $posts->execute();
 
 ?>
-    <p><input type="button" name=add_post value="追加" onclick="location.href='input.html'"></p>
+    <p>
+        <input type="button" value="追加" onclick="location.href='input.html'"> 
+        <input type="button" value="ユーザー一覧" onclick="location.href='users.php'">
+        <input type="button" value="カテゴリ一覧" onclick="location.href='categories.php'">
+    </p>
     <article>
     <?php while ($post = $posts->fetch()): ?>
     <p><a href="post.php?id=<?php print($post['p_id']); ?>"><?php print($post['title']); ?></a>
